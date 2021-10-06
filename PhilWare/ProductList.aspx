@@ -2,6 +2,14 @@
     CodeBehind="ProductList.aspx.cs" Inherits="PhilWare.ProductList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <h2 class="aboutheader">PRODUCTS</h2>
+    <br />
+    <link href="CSS/Product.css" rel="stylesheet" />
+
+
+
+
     <div id="CategoryMenu" style="text-align: center">
         <asp:ListView ID="categoryList"
             ItemType="PhilWare.Models.Category"
@@ -22,7 +30,6 @@
 
         <div>
             <hgroup>
-                <h2><%: Page.Title %></h2>
             </hgroup>
 
             <asp:ListView ID="productList" runat="server"
