@@ -3,6 +3,9 @@
     Inherits="PhilWare.ShoppingCart" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="CSS/Cart.css" rel="stylesheet" />
+    <div>__</div>
+
     <div id="ShoppingCartTitle" runat="server" class="ContentHead">
         <h3 style="font-size: 30px; color: darkblue"><strong>Shopping Cart</strong></h3>
     </div>
@@ -49,11 +52,17 @@ Convert.ToDouble(Item.Product.UnitPrice)))%>
     <table>
         <tr>
             <td>
-                <asp:Button ID="UpdateBtn" runat="server" Text="Update"
+                <asp:Button ID="UpdateBtn" runat="server" Text="Update" CssClass="buttondesign"
                     OnClick="UpdateBtn_Click" />
             </td>
             <td>
                 <!--Checkout Placeholder -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+                <asp:Button ID="ContinueShop" runat="server" Text="Continue Shopping" CssClass="buttondesign" OnClick="ContinueShop_Click" />
             </td>
         </tr>
     </table>

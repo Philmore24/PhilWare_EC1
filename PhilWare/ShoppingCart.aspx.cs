@@ -87,6 +87,11 @@ namespace PhilWare
         {
             UpdateCartItems();
         }
+
+        protected void ContinueShop_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProductList.aspx");
+        }
     }
 
 
