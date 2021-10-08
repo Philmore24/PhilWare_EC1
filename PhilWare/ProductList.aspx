@@ -2,13 +2,10 @@
     CodeBehind="ProductList.aspx.cs" Inherits="PhilWare.ProductList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2 class="aboutheader">PRODUCTS</h2>
-    <br />
+    <%--CSS for Product Page--%>
     <link href="CSS/Product.css" rel="stylesheet" />
-
-
-
+    <br />
+    <h2 class="aboutheader">PRODUCTS</h2>
 
     <div id="CategoryMenu" style="text-align: center">
         <asp:ListView ID="categoryList"
@@ -16,15 +13,17 @@
             runat="server"
             SelectMethod="GetCategories">
             <ItemTemplate>
-                <a href="/ProductList.aspx?id=<%#: Item.CategoryID %>">
-                    <%#: Item.CategoryName %>
-                </a>
-                </a>
-                    </b>
+                <b style="font-size: large; font-style: normal">
+                    <a href="/ProductList.aspx?id=<%#: Item.CategoryID %>">
+                        <%#: Item.CategoryName %>
+                    </a>
+                </b>
+
             </ItemTemplate>
             <ItemSeparatorTemplate>|  </ItemSeparatorTemplate>
         </asp:ListView>
     </div>
+    <br />
     <section>
 
 
@@ -63,11 +62,11 @@
                             <tr>
                                 <td>
                                     <a href="ProductDetails.aspx?productID=<%#:Item.ProductID%>">
-                                        <span><%#:Item.ProductName%> 
+                                        <span class="viewPhilProduct"><b><%#:Item.ProductName%> </b>
                                         </span>
                                     </a>
                                     <br />
-                                    <span>
+                                    <span class="viewPhilProduct">
                                         <b>Price: </b><%#:String.Format("{0:c}", Item.UnitPrice)%> 
                                     </span>
                                     <br />

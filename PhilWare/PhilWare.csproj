@@ -190,6 +190,7 @@
     <Content Include="CSS\About.css" />
     <Content Include="CSS\Contact.css" />
     <Content Include="CSS\Homepage.css" />
+    <Content Include="CSS\Product.css" />
     <Content Include="CSS\StyleMaster.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />

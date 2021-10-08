@@ -37,5 +37,10 @@ namespace PhilWare
             }
             return query;
         }
+
+        protected void CategoryList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
