@@ -192,7 +192,11 @@
     <Content Include="CSS\Homepage.css" />
     <Content Include="CSS\Product.css" />
     <Content Include="CSS\StyleMaster.css" />
+    <Content Include="CustomErrors\404.png" />
+    <Content Include="CustomErrors\Error500.jpg" />
     <Content Include="Default.aspx" />
+    <Content Include="ErrorPage1.aspx" />
+    <Content Include="ErrorPage2.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -391,6 +395,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPage1.aspx.cs">
+      <DependentUpon>ErrorPage1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage1.aspx.designer.cs">
+      <DependentUpon>ErrorPage1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPage2.aspx.cs">
+      <DependentUpon>ErrorPage2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage2.aspx.designer.cs">
+      <DependentUpon>ErrorPage2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

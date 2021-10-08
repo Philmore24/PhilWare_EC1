@@ -4,8 +4,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div id="ShoppingCartTitle" runat="server" class="ContentHead">
-        <h1>Shopping 
-Cart</h1>
+        <h3 style="font-size: 30px; color: darkblue"><strong>Shopping Cart</strong></h3>
     </div>
     <asp:GridView ID="CartList" runat="server" AutoGenerateColumns="False"
         ShowFooter="True" GridLines="Vertical" CellPadding="4"
