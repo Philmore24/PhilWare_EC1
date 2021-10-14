@@ -23,7 +23,9 @@ namespace PhilWare
         {
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
+#pragma warning disable IDE0018 // Inline variable declaration
             Guid requestCookieGuidValue;
+#pragma warning restore IDE0018 // Inline variable declaration
             if (requestCookie != null && Guid.TryParse(requestCookie.Value, out requestCookieGuidValue))
             {
                 // Use the Anti-XSRF token from the cookie
@@ -48,10 +50,10 @@ namespace PhilWare
                 Response.Cookies.Set(responseCookie);
             }
 
-            Page.PreLoad += master_Page_PreLoad;
+            Page.PreLoad += Master_Page_PreLoad;
         }
 
-        protected void master_Page_PreLoad(object sender, EventArgs e)
+        protected void Master_Page_PreLoad(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
