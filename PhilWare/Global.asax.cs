@@ -8,6 +8,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Data.Entity;
 using PhilWare.Models;
+using PhilWare.Logic;
 
 namespace PhilWare
 {
@@ -23,6 +24,10 @@ namespace PhilWare
 
             // Initialize the product database.
             Database.SetInitializer(new ProductDatabaseInitializer());
+
+            // Create the administrator role and user.
+            RoleActions roleActions = new RoleActions();
+            roleActions.CreateAdmin();
         }
     }
 }

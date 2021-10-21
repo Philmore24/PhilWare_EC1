@@ -1,13 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Owin;
 using PhilWare.Models;
 
 namespace PhilWare.Account
@@ -20,46 +15,34 @@ namespace PhilWare.Account
             private set;
         }
 
-        private bool HasPassword(ApplicationUserManager manager)
+        protected bool CanRemoveExternalLogins
         {
-            return manager.HasPassword(User.Identity.GetUserId());
+            get;
+            private set;
         }
 
-        public bool HasPhoneNumber { get; private set; }
-
-        public bool TwoFactorEnabled { get; private set; }
-
-        public bool TwoFactorBrowserRemembered { get; private set; }
-
-        public int LoginsCount { get; set; }
+        private bool HasPassword(UserManager manager)
+        {
+            var user = manager.FindById(User.Identity.GetUserId());
+            return (user != null && user.PasswordHash != null);
+        }
 
         protected void Page_Load()
         {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-            HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
-
-            // Enable this after setting up two-factor authentientication
-            //PhoneNumber.Text = manager.GetPhoneNumber(User.Identity.GetUserId()) ?? String.Empty;
-
-            TwoFactorEnabled = manager.GetTwoFactorEnabled(User.Identity.GetUserId());
-
-            LoginsCount = manager.GetLogins(User.Identity.GetUserId()).Count;
-
-            var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-
             if (!IsPostBack)
             {
                 // Determine the sections to render
+                UserManager manager = new UserManager();
                 if (HasPassword(manager))
                 {
-                    ChangePassword.Visible = true;
+                    changePasswordHolder.Visible = true;
                 }
                 else
                 {
-                    CreatePassword.Visible = true;
-                    ChangePassword.Visible = false;
+                    setPassword.Visible = true;
+                    changePasswordHolder.Visible = false;
                 }
+                CanRemoveExternalLogins = manager.GetLogins(User.Identity.GetUserId()).Count() > 1;
 
                 // Render success message
                 var message = Request.QueryString["m"];
@@ -72,14 +55,64 @@ namespace PhilWare.Account
                         message == "ChangePwdSuccess" ? "Your password has been changed."
                         : message == "SetPwdSuccess" ? "Your password has been set."
                         : message == "RemoveLoginSuccess" ? "The account was removed."
-                        : message == "AddPhoneNumberSuccess" ? "Phone number has been added"
-                        : message == "RemovePhoneNumberSuccess" ? "Phone number was removed"
                         : String.Empty;
                     successMessage.Visible = !String.IsNullOrEmpty(SuccessMessage);
                 }
             }
         }
 
+        protected void ChangePassword_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                UserManager manager = new UserManager();
+                IdentityResult result = manager.ChangePassword(User.Identity.GetUserId(), CurrentPassword.Text, NewPassword.Text);
+                if (result.Succeeded)
+                {
+                    Response.Redirect("~/Account/Manage?m=ChangePwdSuccess");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+        }
+
+        protected void SetPassword_Click(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                // Create the local login info and link the local account to the user
+                UserManager manager = new UserManager();
+                IdentityResult result = manager.AddPassword(User.Identity.GetUserId(), password.Text);
+                if (result.Succeeded)
+                {
+                    Response.Redirect("~/Account/Manage?m=SetPwdSuccess");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+        }
+
+        public IEnumerable<UserLoginInfo> GetLogins()
+        {
+            UserManager manager = new UserManager();
+            var accounts = manager.GetLogins(User.Identity.GetUserId());
+            CanRemoveExternalLogins = accounts.Count() > 1 || HasPassword(manager);
+            return accounts;
+        }
+
+        public void RemoveLogin(string loginProvider, string providerKey)
+        {
+            UserManager manager = new UserManager();
+            var result = manager.RemoveLogin(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            var msg = result.Succeeded
+                ? "?m=RemoveLoginSuccess"
+                : String.Empty;
+            Response.Redirect("~/Account/Manage" + msg);
+        }
 
         private void AddErrors(IdentityResult result)
         {
@@ -87,42 +120,6 @@ namespace PhilWare.Account
             {
                 ModelState.AddModelError("", error);
             }
-        }
-
-        // Remove phonenumber from user
-        protected void RemovePhone_Click(object sender, EventArgs e)
-        {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
-            var result = manager.SetPhoneNumber(User.Identity.GetUserId(), null);
-            if (!result.Succeeded)
-            {
-                return;
-            }
-            var user = manager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
-                Response.Redirect("/Account/Manage?m=RemovePhoneNumberSuccess");
-            }
-        }
-
-        // DisableTwoFactorAuthentication
-        protected void TwoFactorDisable_Click(object sender, EventArgs e)
-        {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            manager.SetTwoFactorEnabled(User.Identity.GetUserId(), false);
-
-            Response.Redirect("/Account/Manage");
-        }
-
-        //EnableTwoFactorAuthentication 
-        protected void TwoFactorEnable_Click(object sender, EventArgs e)
-        {
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            manager.SetTwoFactorEnabled(User.Identity.GetUserId(), true);
-
-            Response.Redirect("/Account/Manage");
         }
     }
 }

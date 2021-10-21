@@ -1,9 +1,7 @@
-﻿using System;
-using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using Owin;
+using System;
+using System.Web;
 using PhilWare.Models;
 
 namespace PhilWare.Account
@@ -22,34 +20,26 @@ namespace PhilWare.Account
             private set { ViewState["ProviderAccountKey"] = value; }
         }
 
-        private void RedirectOnFail()
-        {
-            Response.Redirect((User.Identity.IsAuthenticated) ? "~/Account/Manage" : "~/Account/Login");
-        }
-
         protected void Page_Load()
         {
             // Process the result from an auth provider in the request
             ProviderName = IdentityHelper.GetProviderNameFromRequest(Request);
             if (String.IsNullOrEmpty(ProviderName))
             {
-                RedirectOnFail();
-                return;
+                Response.Redirect("~/Account/Login");
             }
             if (!IsPostBack)
             {
-                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+                var manager = new UserManager();
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    RedirectOnFail();
-                    return;
+                    Response.Redirect("~/Account/Login");
                 }
                 var user = manager.Find(loginInfo.Login);
                 if (user != null)
                 {
-                    signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                    IdentityHelper.SignIn(manager, user, isPersistent: false);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }
                 else if (User.Identity.IsAuthenticated)
@@ -58,8 +48,7 @@ namespace PhilWare.Account
                     var verifiedloginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo(IdentityHelper.XsrfKey, User.Identity.GetUserId());
                     if (verifiedloginInfo == null)
                     {
-                        RedirectOnFail();
-                        return;
+                        Response.Redirect("~/Account/Login");
                     }
 
                     var result = manager.AddLogin(User.Identity.GetUserId(), verifiedloginInfo.Login);
@@ -75,11 +64,11 @@ namespace PhilWare.Account
                 }
                 else
                 {
-                    email.Text = loginInfo.Email;
+                    userName.Text = loginInfo.DefaultUserName;
                 }
             }
-        }        
-        
+        }
+
         protected void LogIn_Click(object sender, EventArgs e)
         {
             CreateAndLoginUser();
@@ -91,27 +80,21 @@ namespace PhilWare.Account
             {
                 return;
             }
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
-            var user = new ApplicationUser() { UserName = email.Text, Email = email.Text };
+            var manager = new UserManager();
+            var user = new ApplicationUser() { UserName = userName.Text };
             IdentityResult result = manager.Create(user);
             if (result.Succeeded)
             {
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    RedirectOnFail();
+                    Response.Redirect("~/Account/Login");
                     return;
                 }
                 result = manager.AddLogin(user.Id, loginInfo.Login);
                 if (result.Succeeded)
                 {
-                    signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // var code = manager.GenerateEmailConfirmationToken(user.Id);
-                    // Send this link via email: IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id)
-
+                    IdentityHelper.SignIn(manager, user, isPersistent: false);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                     return;
                 }
@@ -119,9 +102,9 @@ namespace PhilWare.Account
             AddErrors(result);
         }
 
-        private void AddErrors(IdentityResult result) 
+        private void AddErrors(IdentityResult result)
         {
-            foreach (var error in result.Errors) 
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
             }

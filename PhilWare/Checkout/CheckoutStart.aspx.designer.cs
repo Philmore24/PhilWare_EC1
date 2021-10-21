@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PhilWare.Account
+
+namespace PhilWare.Checkout
 {
-
-
-    public partial class Lockout
+    public partial class CheckoutStart
     {
     }
 }
