@@ -3,7 +3,10 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <h2><%: Title %>.</h2>
+    <%--Added CSS--%>
+    <link href="../CSS/RegLoginStyle.css" rel="stylesheet" />
+
+    <h2 class="headers">Reset Password</h2>
 
     <div>
         <asp:PlaceHolder runat="server" ID="successMessage" Visible="false" ViewStateMode="Disabled">
@@ -51,7 +54,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <asp:Button runat="server" Text="Set Password" ValidationGroup="SetPassword" OnClick="SetPassword_Click" CssClass="btn btn-default" />
+                                <asp:Button runat="server" Text="Set Password" ValidationGroup="SetPassword" OnClick="SetPassword_Click" CssClass="styleButtons" />
                             </div>
                         </div>
                     </div>
@@ -95,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <asp:Button runat="server" Text="Change Password" ValidationGroup="ChangePassword" OnClick="ChangePassword_Click" CssClass="btn btn-default" />
+                                <asp:Button runat="server" Text="Change Password" ValidationGroup="ChangePassword" OnClick="ChangePassword_Click" CssClass="styleButtons" />
                             </div>
                         </div>
                     </div>
@@ -129,7 +132,6 @@
                     </ItemTemplate>
                 </asp:ListView>
 
-                <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage" />
             </section>
 
         </div>

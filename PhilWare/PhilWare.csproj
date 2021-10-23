@@ -184,10 +184,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CSS\About.css" />
+    <Content Include="CSS\AdminPageStyle.css" />
     <Content Include="CSS\Cart.css" />
     <Content Include="CSS\Contact.css" />
     <Content Include="CSS\Homepage.css" />
     <Content Include="CSS\Product.css" />
+    <Content Include="CSS\RegLoginStyle.css" />
     <Content Include="CSS\StyleMaster.css" />
     <Content Include="CustomErrors\404.png" />
     <Content Include="CustomErrors\Error500.jpg" />

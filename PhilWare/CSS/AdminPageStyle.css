@@ -1,0 +1,85 @@
+﻿body {
+    background-color: #f0eba5;
+}
+
+
+
+.PageAdmin h1 {
+    color: darkblue;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: 50px;
+    text-align: center;
+}
+
+.PageAdmin h3 {
+    color: green;
+    font-weight: bold;
+    margin-left: 50px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+.addButtonProduct {
+    background: forestgreen;
+    background-color: forestgreen;
+    border-radius: 6px;
+    border: 1px solid #84bbf3;
+    display: inline-block;
+    padding: 4px 4px;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
+    .addButtonProduct:hover {
+        background: rgba(0,0,0,0.4);
+        background-color: #378de5;
+    }
+
+    .addButtonProduct:active {
+        position: center;
+        top: 1px;
+    }
+
+
+
+
+.RemoveButtonProduct {
+    background: red;
+    background-color: red;
+    border-radius: 6px;
+    border: 1px solid #84bbf3;
+    display: inline-block;
+    padding: 4px 4px;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
+    .RemoveButtonProduct:hover {
+        background: rgba(0,0,0,0.4);
+        background-color: #378de5;
+    }
+
+    .RemoveButtonProduct:active {
+        position: center;
+        top: 1px;
+    }

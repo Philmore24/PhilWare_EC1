@@ -70,7 +70,7 @@
 
 
 
-            <asp:Button ID="Button1" runat="server" Text="CHECK OUT PRODUCT -->" PostBackUrl="~/Product.aspx" CssClass="button-64" />
+            <asp:Button ID="Button1" runat="server" Text="CHECK OUT PRODUCT -->" PostBackUrl="~/ProductList.aspx" CssClass="button-64" />
 
 
 

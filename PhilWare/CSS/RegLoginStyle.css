@@ -1,0 +1,38 @@
+﻿body {
+}
+
+
+h2.headers {
+    color: darkblue;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+
+.styleButtons {
+    background: forestgreen;
+    background-color: forestgreen;
+    border-radius: 6px;
+    border: 1px solid #84bbf3;
+    display: inline-block;
+    padding: 4px 4px;
+    cursor: pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+}
+
+    .styleButtons:hover {
+        background: rgba(0,0,0,0.4);
+        background-color: #378de5;
+    }
+
+    .styleButtons:active {
+        position: center;
+        top: 1px;
+    }
