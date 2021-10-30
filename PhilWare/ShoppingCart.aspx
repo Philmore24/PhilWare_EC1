@@ -56,7 +56,7 @@ Convert.ToDouble(Item.Product.UnitPrice)))%>
                     OnClick="UpdateBtn_Click" />
             </td>
             <td>
-                <!--Checkout Placeholder -->
+                <asp:Button ID="CheckoutClear" runat="server" Text="Checkout" OnClick="CheckoutCart " CssClass="buttondesign" /><!--Checkout Placeholder -->
             </td>
         </tr>
         <tr>

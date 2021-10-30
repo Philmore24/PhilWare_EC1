@@ -92,6 +92,33 @@ namespace PhilWare
         {
             Response.Redirect("ProductList.aspx");
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("Checkout/CheckoutComplete.aspx");
+        }
+
+        protected void CheckoutCart(object sender, EventArgs e)
+        {
+            Session["Total"] = lblTotal.Text;
+            Response.Redirect("Checkout/CheckoutComplete.aspx");
+        }
+
+        protected void CheckoutCart ()
+        {
+
+        }
+
+        protected void CheckoutCart ()
+        {
+
+        }
+
+        protected void CheckoutCart ()
+        {
+
+        }
     }
 
 

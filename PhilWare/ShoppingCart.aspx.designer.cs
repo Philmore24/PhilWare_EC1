@@ -60,6 +60,15 @@ namespace PhilWare
         protected global::System.Web.UI.WebControls.Button UpdateBtn;
 
         /// <summary>
+        /// CheckoutClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CheckoutClear;
+
+        /// <summary>
         /// ContinueShop control.
         /// </summary>
         /// <remarks>
