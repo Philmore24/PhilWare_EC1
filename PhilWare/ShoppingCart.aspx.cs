@@ -105,20 +105,12 @@ namespace PhilWare
             Response.Redirect("Checkout/CheckoutComplete.aspx");
         }
 
-        protected void CheckoutCart ()
+        protected void CheckoutCart()
         {
 
         }
 
-        protected void CheckoutCart ()
-        {
 
-        }
-
-        protected void CheckoutCart ()
-        {
-
-        }
     }
 
 

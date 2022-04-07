@@ -77,7 +77,10 @@ namespace PhilWare
             if (HttpContext.Current.User.IsInRole("Administrator"))
             {
                 adminLink.Visible = true;
+                Customer.Visible = true;
             }
+
+
 
         }
 
